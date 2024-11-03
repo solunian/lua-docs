@@ -1,4 +1,5 @@
 import {themes as prismThemes} from 'prism-react-renderer';
+import macchiato from "src/code-themes/macchiato";
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -63,13 +64,17 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'lua-docs',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Lua Icon',
+        src: 'img/lua.svg',
+        srcDark: 'img/luadark.svg',
       },
       items: [
         {
@@ -87,7 +92,7 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'dark',
+      // style: 'dark',
       links: [
         {
           title: 'Docs',
@@ -134,6 +139,8 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["lua"],
+      // defaultLanguage: "lua",
     },
   } satisfies Preset.ThemeConfig,
 };
