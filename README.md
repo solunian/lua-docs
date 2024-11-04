@@ -1,3 +1,3 @@
 # lua-docs
 
-aethetic lua docs using docusaurus
+aethetic documentation for the coolest scripting language
