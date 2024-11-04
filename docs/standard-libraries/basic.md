@@ -39,7 +39,7 @@ It performs different functions according to its first argument, `opt`:
   (larger values mean more steps) in a non-specified way.
   If you want to control the step size
   you must experimentally tune the value of `arg`.
-  Returns **true ** if the step finished a collection cycle.
+  Returns **true** if the step finished a collection cycle.
 
 - **"setpause":**
   sets `arg` as the new value for the _pause_ of
