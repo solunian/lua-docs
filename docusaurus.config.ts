@@ -1,29 +1,14 @@
 import { themes as prismThemes } from "prism-react-renderer";
-import macchiato from "src/code-themes/macchiato";
+// import macchiato from "src/code-themes/macchiato";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "lua-docs",
-  tagline: "Dinosaurs are cool",
+  tagline: "aesthetic documentation for the coolest scripting language",
   favicon: "/img/lua.png",
-  // Set the production url of your site here
   url: "https://lua-docs.vercel.app/",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'facebook', // Usually your GitHub org/user name.
-  // projectName: 'docusaurus', // Usually your repo name.
-
-  // onBrokenLinks: 'throw',
-  // onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -35,8 +20,6 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/solunian/lua-docs/tree/main/",
         },
         theme: {
@@ -51,7 +34,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    // image: "img/docusaurus-social-card.jpg",
     navbar: {
       title: "lua-docs",
       logo: {
@@ -74,49 +57,21 @@ const config: Config = {
       ],
     },
     footer: {
-      // style: 'dark',
       links: [
         {
-          title: "Docs",
-          items: [
-            {
-              label: "Tutorial",
-              to: "/docs/intro",
-            },
-          ],
+          title: "docs",
+          items: [{ label: "Tutorial", to: "/docs/intro" }],
         },
         {
-          title: "Community",
-          items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
-          ],
+          title: "origin",
+          items: [{ label: "lua.org", href: "https://lua.org/" }],
         },
         {
-          title: "More",
-          items: [
-            {
-              label: "Blog",
-              to: "/blog",
-            },
-            {
-              label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
-            },
-          ],
+          title: "other",
+          items: [{ label: "github", href: "https://github.com/solunian/lua-docs" }],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: "built with docusaurus.",
     },
     prism: {
       theme: prismThemes.github,
