@@ -3,18 +3,18 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
- @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
 
 /* You can override the default Infima variables here. */
 /* https://coolors.co/000069-000073-00007f-2c2896-584fac-7569ba-af9ed7 */
 :root {
-  --ifm-color-primary: #2C2896;
-  --ifm-color-primary-dark: #00007F; /* actual color theme for lua */
+  --ifm-color-primary: #2c2896;
+  --ifm-color-primary-dark: #00007f; /* actual color theme for lua */
   --ifm-color-primary-darker: #000073;
   --ifm-color-primary-darkest: #000069;
-  --ifm-color-primary-light: #584FAC;
-  --ifm-color-primary-lighter: #7569BA;
-  --ifm-color-primary-lightest: #AF9ED7;
+  --ifm-color-primary-light: #584fac;
+  --ifm-color-primary-lighter: #7569ba;
+  --ifm-color-primary-lightest: #af9ed7;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-font-family-base: "Rethink Sans", sans-serif;
@@ -24,14 +24,14 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 /* https://coolors.co/3b359d-4a42a5-584fac-7569ba-9284c9-af9ed7-ccb8e6 */
-[data-theme='dark'] {
-  --ifm-color-primary: #7267BE;
-  --ifm-color-primary-dark: #655BB5;
-  --ifm-color-primary-darker: #584FAC;
-  --ifm-color-primary-darkest: #4A42A5;
-  --ifm-color-primary-light: #8B7ECF;
-  --ifm-color-primary-lighter: #A595E1;
-  --ifm-color-primary-lightest: #BEACF2;
+[data-theme="dark"] {
+  --ifm-color-primary: #7267be;
+  --ifm-color-primary-dark: #655bb5;
+  --ifm-color-primary-darker: #584fac;
+  --ifm-color-primary-darkest: #4a42a5;
+  --ifm-color-primary-light: #8b7ecf;
+  --ifm-color-primary-lighter: #a595e1;
+  --ifm-color-primary-lightest: #beacf2;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
