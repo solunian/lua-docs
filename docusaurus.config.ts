@@ -210,7 +210,7 @@ const config: Config = {
         srcDark: "img/luadark.svg",
       },
       items: [
-        { to: "/docs/lua", label: "lua", position: "left" },
+        { to: "/docs/general", label: "general", position: "left" },
         { to: "/docs/standard-libraries/", label: "standard-libraries", position: "left" },
         { to: "/docs/c-api/", label: "c-api", position: "left" },
         { to: "/docs/auxiliary/", label: "auxiliary", position: "left" },
@@ -226,15 +226,28 @@ const config: Config = {
       links: [
         {
           title: "docs",
-          items: [{ label: "standard-libraries", to: "/docs/standard-libraries" }],
+          items: [
+            { to: "/docs/general", label: "general" },
+            { to: "/docs/standard-libraries", label: "standard-libraries" },
+            { to: "/docs/c-api", label: "c-api" },
+            { to: "/docs/auxiliary", label: "auxiliary" },
+            { to: "/docs/about", label: "about" },
+          ],
         },
         {
           title: "origin",
-          items: [{ label: "lua.org", href: "https://lua.org/" }],
+          items: [
+            { label: "lua.org", href: "https://lua.org/" },
+            { label: "manuals", href: "https://www.lua.org/manual/" },
+            { label: "documentation", href: "https://lua.org/docs.html" },
+          ],
         },
         {
           title: "other",
-          items: [{ label: "github", href: "https://github.com/solunian/lua-docs" }],
+          items: [
+            { label: "about", to: "docs/about" },
+            { label: "github", href: "https://github.com/solunian/lua-docs" },
+          ],
         },
       ],
       copyright: "built with docusaurus.",

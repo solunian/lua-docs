@@ -15,11 +15,18 @@
   --ifm-color-primary-light: #584fac;
   --ifm-color-primary-lighter: #7569ba;
   --ifm-color-primary-lightest: #af9ed7;
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 90%;
+  --ifm-font-size-base: 100%;
+  /* idk if the font size even changes from this. so sad */
+  /* --ifm-heading-h1-font-size: 2rem;
+  --ifm-heading-h2-font-size: 1rem;
+  --ifm-heading-h3-font-size: 0.8rem; */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-font-family-base: "Rethink Sans", sans-serif;
   --ifm-heading-font-family: "Rethink Sans", sans-serif;
   --ifm-font-family-monospace: "JetBrains Mono", monospace;
+  --doc-sidebar-width: 225px !important;
+  /* --ifm-col-width: calc(4 / 12 * 100%) !important; */
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -33,4 +40,9 @@
   --ifm-color-primary-lighter: #a595e1;
   --ifm-color-primary-lightest: #beacf2;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* getting rid of jetbrains mono ligatures */
+code {
+  font-variant-ligatures: none !important;
 }
