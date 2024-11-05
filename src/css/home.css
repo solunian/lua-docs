@@ -1,0 +1,22 @@
+.flexy {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 5rem 3rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .flexy {
+    flex-wrap: wrap;
+  }
+}
+
+.flexyblock {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.flexyblock h2 {
+  text-align: center;
+}

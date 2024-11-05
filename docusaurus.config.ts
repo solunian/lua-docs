@@ -250,7 +250,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: "built with docusaurus.",
+      copyright: "built with dinosaurs!",
     },
     prism: {
       theme: latte,
