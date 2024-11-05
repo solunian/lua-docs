@@ -30,15 +30,15 @@
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-/* https://coolors.co/3b359d-4a42a5-584fac-7569ba-9284c9-af9ed7-ccb8e6 */
+/* https://coolors.co/12148f-23279f-353aaf-6067cf-8a94ef-aab5ff-c9d0ff */
 [data-theme="dark"] {
-  --ifm-color-primary: #7267be;
-  --ifm-color-primary-dark: #655bb5;
-  --ifm-color-primary-darker: #584fac;
-  --ifm-color-primary-darkest: #4a42a5;
-  --ifm-color-primary-light: #8b7ecf;
-  --ifm-color-primary-lighter: #a595e1;
-  --ifm-color-primary-lightest: #beacf2;
+  --ifm-color-primary: #6067cf;
+  --ifm-color-primary-dark: #353aaf;
+  --ifm-color-primary-darker: #23279f;
+  --ifm-color-primary-darkest: #12148f;
+  --ifm-color-primary-light: #8a94ef;
+  --ifm-color-primary-lighter: #aab5ff;
+  --ifm-color-primary-lightest: #c9d0ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
