@@ -184,6 +184,10 @@ const config: Config = {
   plugins: [
     [
       "vercel-analytics",
+      {
+        debug: false,
+        mode: "auto",
+      },
     ],
   ],
 
