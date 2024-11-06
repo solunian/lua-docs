@@ -3,40 +3,10 @@ sidebar_position: 3
 ---
 
 The package library provides basic
-facilities for loading and building modules in Lua.
-It exports two of its functions directly in the global environment:
-`require` and `module`.
-Everything else is exported in a table `package`.
-
-## `module (name [, ...])`
-
-Creates a module.
-If there is a table in `package.loaded[name]`,
-this table is the module.
-Otherwise, if there is a global table `t` with the given name,
-this table is the module.
-Otherwise creates a new table `t` and
-sets it as the value of the global `name` and
-the value of `package.loaded[name]`.
-This function also initializes `t._NAME` with the given name,
-`t._M` with the module (`t` itself),
-and `t._PACKAGE` with the package name
-(the full module name minus last component; see below).
-Finally, `module` sets `t` as the new environment
-of the current function and the new value of `package.loaded[name]`,
-so that `require` returns `t`.
-
-If `name` is a compound name
-(that is, one with components separated by dots),
-`module` creates (or reuses, if they already exist)
-tables for each component.
-For instance, if `name` is `a.b.c`,
-then `module` stores the module table in field `c` of
-field `b` of global `a`.
-
-This function can receive optional _options_ after
-the module name,
-where each option is a function to be applied over the module.
+facilities for loading modules in Lua.
+It exports one function directly in the global environment:
+`require`.
+Everything else is exported in the table `package`.
 
 ## `require (modname)`
 
@@ -45,46 +15,86 @@ The function starts by looking into the `package.loaded` table
 to determine whether `modname` is already loaded.
 If it is, then `require` returns the value stored
 at `package.loaded[modname]`.
+(The absence of a second result in this case
+signals that this call did not have to load the module.)
 Otherwise, it tries to find a _loader_ for the module.
 
 To find a loader,
-`require` is guided by the `package.loaders` array.
-By changing this array,
+`require` is guided by the table `package.searchers`.
+Each item in this table is a search function,
+that searches for the module in a particular way.
+By changing this table,
 we can change how `require` looks for a module.
 The following explanation is based on the default configuration
-for `package.loaders`.
+for `package.searchers`.
 
 First `require` queries `package.preload[modname]`.
 If it has a value,
-this value (which should be a function) is the loader.
+this value (which must be a function) is the loader.
 Otherwise `require` searches for a Lua loader using the
 path stored in `package.path`.
 If that also fails, it searches for a C loader using the
 path stored in `package.cpath`.
 If that also fails,
-it tries an _all-in-one_ loader (see `package.loaders`).
+it tries an _all-in-one_ loader (see `package.searchers`).
 
 Once a loader is found,
-`require` calls the loader with a single argument, `modname`.
-If the loader returns any value,
+`require` calls the loader with two arguments:
+`modname` and an extra value,
+a _loader data_,
+also returned by the searcher.
+The loader data can be any value useful to the module;
+for the default searchers,
+it indicates where the loader was found.
+(For instance, if the loader came from a file,
+this extra value is the file path.)
+If the loader returns any non-nil value,
 `require` assigns the returned value to `package.loaded[modname]`.
-If the loader returns no value and
+If the loader does not return a non-nil value and
 has not assigned any value to `package.loaded[modname]`,
 then `require` assigns **true** to this entry.
 In any case, `require` returns the
 final value of `package.loaded[modname]`.
+Besides that value, `require` also returns as a second result
+the loader data returned by the searcher,
+which indicates how `require` found the module.
 
 If there is any error loading or running the module,
 or if it cannot find any loader for the module,
-then `require` signals an error.
+then `require` raises an error.
+
+## `package.config`
+
+A string describing some compile-time configurations for packages.
+This string is a sequence of lines:
+
+- The first line is the directory separator string.
+  Default is '`\`' for Windows and '`/`' for all other systems.
+
+- The second line is the character that separates templates in a path.
+  Default is '`;`'.
+
+- The third line is the string that marks the
+  substitution points in a template.
+  Default is '`?`'.
+
+- The fourth line is a string that, in a path in Windows,
+  is replaced by the executable's directory.
+  Default is '`!`'.
+
+- The fifth line is a mark to ignore all text after it
+  when building the `luaopen_` function name.
+  Default is '`-`'.
 
 ## `package.cpath`
 
-The path used by `require` to search for a C loader.
+A string with the path used by `require`
+to search for a C loader.
 
 Lua initializes the C path `package.cpath` in the same way
 it initializes the Lua path `package.path`,
-using the environment variable `LUA_CPATH`
+using the environment variable `LUA_CPATH_5_4`,
+or the environment variable `LUA_CPATH`,
 or a default path defined in `luaconf.h`.
 
 ## `package.loaded`
@@ -95,45 +105,106 @@ When you require a module `modname` and
 `package.loaded[modname]` is not false,
 `require` simply returns the value stored there.
 
-## `package.loaders`
+This variable is only a reference to the real table;
+assignments to this variable do not change the
+table used by `require`.
+The real table is stored in the C registry,
+indexed by the key `LUA_LOADED_TABLE`, a string.
 
-A table used by `require` to control how to load modules.
+## `package.loadlib (libname, funcname)`
+
+Dynamically links the host program with the C library `libname`.
+
+If `funcname` is "`*`",
+then it only links with the library,
+making the symbols exported by the library
+available to other dynamically linked libraries.
+Otherwise,
+it looks for a function `funcname` inside the library
+and returns this function as a C function.
+So, `funcname` must follow the `lua_CFunction` prototype
+(see `lua_CFunction`).
+
+This is a low-level function.
+It completely bypasses the package and module system.
+Unlike `require`,
+it does not perform any path searching and
+does not automatically adds extensions.
+`libname` must be the complete file name of the C library,
+including if necessary a path and an extension.
+`funcname` must be the exact name exported by the C library
+(which may depend on the C compiler and linker used).
+
+This functionality is not supported by ISO C.
+As such, it is only available on some platforms
+(Windows, Linux, Mac OS X, Solaris, BSD,
+plus other Unix systems that support the `dlfcn` standard).
+
+This function is inherently insecure,
+as it allows Lua to call any function in any readable dynamic
+library in the system.
+(Lua calls any function assuming the function
+has a proper prototype and respects a proper protocol
+(see `lua_CFunction`).
+Therefore,
+calling an arbitrary function in an arbitrary dynamic library
+more often than not results in an access violation.)
+
+## `package.path`
+
+A string with the path used by `require`
+to search for a Lua loader.
+
+At start-up, Lua initializes this variable with
+the value of the environment variable `LUA_PATH_5_4` or
+the environment variable `LUA_PATH` or
+with a default path defined in `luaconf.h`,
+if those environment variables are not defined.
+A "`;;`" in the value of the environment variable
+is replaced by the default path.
+
+## `package.preload`
+
+A table to store loaders for specific modules
+(see `require`).
+
+This variable is only a reference to the real table;
+assignments to this variable do not change the
+table used by `require`.
+The real table is stored in the C registry,
+indexed by the key `LUA_PRELOAD_TABLE`, a string.
+
+## `package.searchers`
+
+A table used by `require` to control how to find modules.
 
 Each entry in this table is a _searcher function_.
 When looking for a module,
 `require` calls each of these searchers in ascending order,
 with the module name (the argument given to `require`) as its
-sole parameter.
-The function can return another function (the module _loader_)
-or a string explaining why it did not find that module
+sole argument.
+If the searcher finds the module,
+it returns another function, the module _loader_,
+plus an extra value, a _loader data_,
+that will be passed to that loader and
+returned as a second result by `require`.
+If it cannot find the module,
+it returns a string explaining why
 (or **nil** if it has nothing to say).
-Lua initializes this table with four functions.
+
+Lua initializes this table with four searcher functions.
 
 The first searcher simply looks for a loader in the
 `package.preload` table.
 
 The second searcher looks for a loader as a Lua library,
 using the path stored at `package.path`.
-A path is a sequence of _templates_ separated by semicolons.
-For each template,
-the searcher will change each interrogation
-mark in the template by `filename`,
-which is the module name with each dot replaced by a
-"directory separator" (such as "`/`" in Unix);
-then it will try to open the resulting file name.
-So, for instance, if the Lua path is the string
-
-```
-"./?.lua;./?.lc;/usr/local/?/init.lua"
-```
-
-the search for a Lua file for module `foo`
-will try to open the files
-`./foo.lua`, `./foo.lc`, and
-`/usr/local/foo/init.lua`, in that order.
+The search is done as described in function `package.searchpath`.
 
 The third searcher looks for a loader as a C library,
 using the path given by the variable `package.cpath`.
+Again,
+the search is done as described in function `package.searchpath`.
 For instance,
 if the C path is the string
 
@@ -153,9 +224,9 @@ The name of this C function is the string "`luaopen_`"
 concatenated with a copy of the module name where each dot
 is replaced by an underscore.
 Moreover, if the module name has a hyphen,
-its prefix up to (and including) the first hyphen is removed.
-For instance, if the module name is `a.v1-b.c`,
-the function name will be `luaopen_b_c`.
+its suffix after (and including) the first hyphen is removed.
+For instance, if the module name is `a.b.c-v2.1`,
+the function name will be `luaopen_a_b_c`.
 
 The fourth searcher tries an _all-in-one loader_.
 It searches the C path for a library for
@@ -169,48 +240,42 @@ With this facility, a package can pack several C submodules
 into one single library,
 with each submodule keeping its original open function.
 
-## `package.loadlib (libname, funcname)`
+All searchers except the first one (preload) return as the extra value
+the file path where the module was found,
+as returned by `package.searchpath`.
+The first searcher always returns the string "`:preload:`".
 
-Dynamically links the host program with the C library `libname`.
-Inside this library, looks for a function `funcname`
-and returns this function as a C function.
-(So, `funcname` must follow the protocol (see `lua_CFunction`)).
+Searchers should raise no errors and have no side effects in Lua.
+(They may have side effects in C,
+for instance by linking the application with a library.)
 
-This is a low-level function.
-It completely bypasses the package and module system.
-Unlike `require`,
-it does not perform any path searching and
-does not automatically adds extensions.
-`libname` must be the complete file name of the C library,
-including if necessary a path and extension.
-`funcname` must be the exact name exported by the C library
-(which may depend on the C compiler and linker used).
+## `package.searchpath (name, path [, sep [, rep]])`
 
-This function is not supported by ANSI C.
-As such, it is only available on some platforms
-(Windows, Linux, Mac OS X, Solaris, BSD,
-plus other Unix systems that support the `dlfcn` standard).
+Searches for the given `name` in the given `path`.
 
-## `package.path`
+A path is a string containing a sequence of
+_templates_ separated by semicolons.
+For each template,
+the function replaces each interrogation mark (if any)
+in the template with a copy of `name`
+wherein all occurrences of `sep`
+(a dot, by default)
+were replaced by `rep`
+(the system's directory separator, by default),
+and then tries to open the resulting file name.
 
-The path used by `require` to search for a Lua loader.
+For instance, if the path is the string
 
-At start-up, Lua initializes this variable with
-the value of the environment variable `LUA_PATH` or
-with a default path defined in `luaconf.h`,
-if the environment variable is not defined.
-Any "`;;`" in the value of the environment variable
-is replaced by the default path.
+```
+"./?.lua;./?.lc;/usr/local/?/init.lua"
+```
 
-## `package.preload`
+the search for the name `foo.a`
+will try to open the files
+`./foo/a.lua`, `./foo/a.lc`, and
+`/usr/local/foo/a/init.lua`, in that order.
 
-A table to store loaders for specific modules
-(see `require`).
-
-## `package.seeall (module)`
-
-Sets a metatable for `module` with
-its `__index` field referring to the global environment,
-so that this module inherits values
-from the global environment.
-To be used as an option to function `module`.
+Returns the resulting name of the first file that it can
+open in read mode (after closing the file),
+or **fail** plus an error message if none succeeds.
+(This error message lists all file names it tried to open.)

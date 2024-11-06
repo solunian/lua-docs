@@ -50,7 +50,7 @@ We say that an index is _valid_
 if it lies between 1 and the stack top
 (that is, if `1 &le; abs(index) &le; top`).
 
-## Stack Size
+### Stack Size
 
 When you interact with Lua API,
 you are responsible for ensuring consistency.
@@ -79,7 +79,7 @@ as follows:
 
 Note that 0 is never an acceptable index.
 
-## Pseudo-Indices
+### Pseudo-Indices
 
 Unless otherwise noted,
 any function that accepts valid indices can also be called with

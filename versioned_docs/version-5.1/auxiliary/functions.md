@@ -716,7 +716,7 @@ of the control at level `lvl` in the call stack.
 Typically this string has the following format:
 
 ```
-chunkname:currentline:
+<chunkname>:<currentline>:
 ```
 
 Level 0 is the running function,

@@ -2,8 +2,6 @@
 sidebar_position: 1
 ---
 
-# general
-
 ## Basic Types
 
 ```

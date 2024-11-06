@@ -1,43 +1,69 @@
 # standard-libraries
 
 The standard Lua libraries provide useful functions
-that are implemented directly through the C API.
+that are implemented in C through the C API.
 Some of these functions provide essential services to the language
 (e.g., `type` and `getmetatable`);
-others provide access to "outside" services (e.g., I/O);
+others provide access to outside services (e.g., I/O);
 and others could be implemented in Lua itself,
-but are quite useful or have critical performance requirements that
+but that for different reasons
 deserve an implementation in C (e.g., `table.sort`).
 
 All libraries are implemented through the official C API
 and are provided as separate C modules.
+Unless otherwise noted,
+these library functions do not adjust its number of arguments
+to its expected parameters.
+For instance, a function documented as `foo(arg)`
+should not be called without an argument.
+
+The notation **fail** means a false value representing
+some kind of failure.
+(Currently, **fail** is equal to **nil**,
+but that may change in future versions.
+The recommendation is to always test the success of these functions
+with `(not status)`, instead of `(status == nil)`.)
+
 Currently, Lua has the following standard libraries:
 
-- basic library, which includes the coroutine sub-library;
+- basic library;
+
+- coroutine library;
+
 - package library;
+
 - string manipulation;
+
+- basic UTF-8 support;
+
 - table manipulation;
+
 - mathematical functions (sin, log, etc.);
+
 - input and output;
+
 - operating system facilities;
+
 - debug facilities.
 
-Except for the basic and the package libraries, each library provides all its functions as fields of a global table or as methods of its objects.
+Except for the basic and the package libraries,
+each library provides all its functions as fields of a global table
+or as methods of its objects.
 
 To have access to these libraries,
 the C host program should call the `luaL_openlibs` function,
 which opens all standard libraries.
 Alternatively,
-it can open them individually by calling
+the host program can open them individually by using
+`luaL_requiref` to call
 `luaopen_base` (for the basic library),
 `luaopen_package` (for the package library),
+`luaopen_coroutine` (for the coroutine library),
 `luaopen_string` (for the string library),
+`luaopen_utf8` (for the UTF-8 library),
 `luaopen_table` (for the table library),
 `luaopen_math` (for the mathematical library),
 `luaopen_io` (for the I/O library),
-`luaopen_os` (for the Operating System library),
+`luaopen_os` (for the operating system library),
 and `luaopen_debug` (for the debug library).
-These functions are declared in `lualib.h`
-and should not be called directly:
-you must call them like any other Lua C function,
-e.g., by using `lua_call`.
+These functions are declared in `lualib.h`.
