@@ -13,6 +13,9 @@ Hi, I made this. Why did I do this... that's a good question. I hope it's helpfu
 
 Anyway! These docs were built with docusaurus and deployed with vercel.
 
+I'm missing search, and the links to categories go to the most recent version instead of the current one selected.
+But, I'm not gonna deal with that. If someone does wanna attempt something, send a pr, and I may or may not merge those changes.
+
 I really only did this as a sidequest for making a game with löve, a lua game engine.
 I just thought the documentation for the lua's std libs could be much better. I thought it
 wouldn't take too long... but it took up three days-ish. Hmph. But, I mean for two of the
