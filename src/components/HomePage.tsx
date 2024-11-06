@@ -25,8 +25,8 @@ export default function HomePage() {
           <p>
             Lua is just simple and fast. Only has 22 keywords (in v5.4), only one multi-purpose data
             structure (the table!), concise syntax (kinda), and an interface with C for embedding,
-            etc. It's so simple; in fact, the documentation for its standard libraries is a plain
-            html file in the version manual. Without a dark mode.
+            etc. It's so simple; in fact, the documentation (just the manual) for its standard
+            libraries is one long, plain webpage containing everything. Without a dark mode.
           </p>
           <p>
             Some would call such simplicity beautiful. I decided to take it upon myself to parse
