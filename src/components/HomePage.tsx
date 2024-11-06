@@ -37,11 +37,20 @@ export default function HomePage() {
         </div>
         <div className="flexyblock">
           <h2>And Some Crediting!</h2>
-          <p>
-            A big thanks to the team at PUC-Rio who created Lua. It's a pretty cool language. The documentation here is meant to be an aesthetic replica of the manual from their website. There may be some innaccuracies in parsing it over.
-            <hr/>
-Lua is free software distributed under the terms of the MIT license reproduced here. Lua may be used for any purpose, including commercial purposes, at absolutely no cost. No paperwork, no royalties, no GNU-like "copyleft" restrictions, either. Just download it and use it.
-          </p>
+          <div>
+            <p>
+              A big thanks to the team at PUC-Rio who created Lua. It's a pretty cool language. The
+              documentation here is meant to be an aesthetic replica of the manual from their
+              website. There may be some innaccuracies in parsing it over.
+            </p>
+            <hr />
+            <p>
+              Lua is free software distributed under the terms of the MIT license reproduced here.
+              Lua may be used for any purpose, including commercial purposes, at absolutely no cost.
+              No paperwork, no royalties, no GNU-like "copyleft" restrictions, either. Just download
+              it and use it.
+            </p>
+          </div>
           <p>(copied from lua.org/license.html)</p>
         </div>
       </div>

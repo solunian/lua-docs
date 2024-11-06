@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
@@ -26,7 +25,7 @@ export default function Home(): JSX.Element {
     <Layout title="home" description="aesthetic lua docs for the coolest scripting language">
       <HomepageHeader />
       <main>
-        <HomePage />  
+        <HomePage />
       </main>
     </Layout>
   );

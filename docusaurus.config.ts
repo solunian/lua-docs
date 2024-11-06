@@ -186,6 +186,7 @@ const config: Config = {
       "classic",
       {
         docs: {
+          includeCurrentVersion: false,
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/solunian/lua-docs/tree/main/",
         },
@@ -215,6 +216,7 @@ const config: Config = {
         { to: "/docs/c-api/", label: "c-api", position: "left" },
         { to: "/docs/auxiliary/", label: "auxiliary", position: "left" },
         { to: "/docs/about", label: "about", position: "left" },
+        { type: "docsVersionDropdown", position: "right" },
         {
           label: "github",
           href: "https://github.com/solunian/lua-docs",
@@ -231,7 +233,6 @@ const config: Config = {
             { to: "/docs/standard-libraries", label: "standard-libraries" },
             { to: "/docs/c-api", label: "c-api" },
             { to: "/docs/auxiliary", label: "auxiliary" },
-            { to: "/docs/about", label: "about" },
           ],
         },
         {
